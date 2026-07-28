@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:meta/meta.dart';
-
 import '../capabilities/engine_capabilities.dart';
 import '../config/protocol_config.dart';
 import '../cores/core_type.dart';
@@ -250,22 +248,22 @@ class VpnEngine {
   String? _pendingFailureReason;
 
   /// Makes exactly the next [connect] call fail with [reason] instead of
-  /// succeeding. Not part of the target real-engine API — QA-only.
-  @visibleForTesting
+  /// succeeding. Not part of the target real-engine API — QA-only, meant to
+  /// be driven through `MockEngineController` rather than called directly by
+  /// app code.
   void primeConnectFailure(String reason) {
     _pendingFailureReason = reason;
   }
 
-  /// Overrides the next emitted [stats] value. QA-only.
-  @visibleForTesting
+  /// Overrides the next emitted [stats] value. QA-only, see
+  /// [primeConnectFailure].
   void forceStats(ConnectionStats stats) {
     _stats = stats;
     _statsController.add(stats);
   }
 
   /// Replaces the internal RNG so subsequent simulated values are
-  /// reproducible from this point on. QA-only.
-  @visibleForTesting
+  /// reproducible from this point on. QA-only, see [primeConnectFailure].
   void reseedRandom(int seed) {
     _random = Random(seed);
   }

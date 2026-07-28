@@ -22,7 +22,7 @@ Future<void> main() async {
   );
 
   await engine.connect(server);
-  print('state: ${engine.state}');
+  assert(engine.state is Connected);
 
   await engine.disconnect();
   await engine.dispose();
